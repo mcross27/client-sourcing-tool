@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import {
-    Table, TableBody,TableCell, TableContainer,TableHead,TableRow,Paper,Button
+    Table, TableBody,TableCell, TableContainer,TableHead,TableRow,Paper,TextField, Button
     } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
@@ -91,11 +91,11 @@ const ContactTable = () => {
                             </TableCell>
                             <TableCell>
                                 {editIdx === index ? (
-                                    <IconButton onClick={() => handleSave(contact._id)}><SaveIcon /></IconButton>
+                                    <SaveIcon onClick={() => handleSave(contact._id)}><SaveIcon /></SaveIcon>
                                 ) : (
-                                    <IconButton onClick={() => handleEdit(index, contact)}><EditIcon /></IconButton>
+                                    <EditIcon onClick={() => handleEdit(index, contact)}><EditIcon /></EditIcon>
                                 )}
-                                <IconButton onClick={() => deleteContact(contact._id)}><DeleteIcon /></IconButton>
+                                <DeleteIcon onClick={() => deleteContact(contact._id)}><DeleteIcon /></DeleteIcon>
                             </TableCell>
                         </TableRow>
                     ))}
