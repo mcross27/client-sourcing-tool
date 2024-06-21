@@ -44,6 +44,21 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// Get contacts by company
+router.get('/company/:companyId', async (req, res) => {
+    const companyId = req.params.companyId;
+    try {
+        const contacts = await Contact.find({company: companyId});
+        res.json(contacts);
+        if (!contacts) {
+            return res.status(404).send('Contacts not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json(error.message);
+    }
+});
+
 //Update a contact
 router.patch('/:id', async (req, res) => {
     const contactId = req.params.id;

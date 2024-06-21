@@ -4,6 +4,7 @@ import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField
 } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Save as SaveIcon } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const CompanyTable = ({ data, columns, updateData, deleteData }) => {
     const { companies, editCompany, deleteCompany } = useContext(CompanyContext);
@@ -25,83 +26,86 @@ const CompanyTable = ({ data, columns, updateData, deleteData }) => {
     };
 
     return (
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Website</TableCell>
-                        <TableCell>Industry</TableCell>
-                        <TableCell>LinkedIn</TableCell>
-                        <TableCell>Actions</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {companies.map((company, index) => (
-                        <TableRow key={company._id}>
-                            <TableCell>
-                                {editIdx === index ? (
-                                    <TextField
-                                        name="name"
-                                        value={currentCompany.name}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    company.name
-                                )}
-                            </TableCell>
-                            <TableCell>
-                                {editIdx === index ? (
-                                    <TextField
-                                        name="website"
-                                        value={currentCompany.website}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    company.website
-                                )}
-                            </TableCell>
-                            <TableCell>
-                                {editIdx === index ? (
-                                    <TextField
-                                        name="industry"
-                                        value={currentCompany.industry}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    company.industry
-                                )}
-                            </TableCell>
-                            <TableCell>
-                                {editIdx === index ? (
-                                    <TextField
-                                        name="companyLinkedin"
-                                        value={currentCompany.companyLinkedin}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    company.companyLinkedin
-                                )}
-                            </TableCell>
-                            <TableCell>
-                                {editIdx === index ? (
-                                    <IconButton onClick={() => handleSave(company._id)}>
-                                        <SaveIcon />
-                                    </IconButton>
-                                ) : (
-                                    <IconButton onClick={() => handleEdit(index, company)}>
-                                        <EditIcon />
-                                    </IconButton>
-                                )}
-                                <IconButton onClick={() => deleteCompany(company._id)}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
+        <div>
+            <h1>Companies</h1>
+                <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Website</TableCell>
+                            <TableCell>Industry</TableCell>
+                            <TableCell>LinkedIn</TableCell>
+                            <TableCell>Actions</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {companies.map((company, index) => (
+                            <TableRow key={company._id}>
+                                <TableCell>
+                                    {editIdx === index ? (
+                                        <TextField
+                                            name="name"
+                                            value={currentCompany.name}
+                                            onChange={handleChange}
+                                        />
+                                    ) : (
+                                        <Link to={`/company/${company._id}/contacts`}>{company.name}</Link>
+                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    {editIdx === index ? (
+                                        <TextField
+                                            name="website"
+                                            value={currentCompany.website}
+                                            onChange={handleChange}
+                                        />
+                                    ) : (
+                                        company.website
+                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    {editIdx === index ? (
+                                        <TextField
+                                            name="industry"
+                                            value={currentCompany.industry}
+                                            onChange={handleChange}
+                                        />
+                                    ) : (
+                                        company.industry
+                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    {editIdx === index ? (
+                                        <TextField
+                                            name="companyLinkedin"
+                                            value={currentCompany.companyLinkedin}
+                                            onChange={handleChange}
+                                        />
+                                    ) : (
+                                        company.companyLinkedin
+                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    {editIdx === index ? (
+                                        <IconButton onClick={() => handleSave(company._id)}>
+                                            <SaveIcon />
+                                        </IconButton>
+                                    ) : (
+                                        <IconButton onClick={() => handleEdit(index, company)}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    )}
+                                    <IconButton onClick={() => deleteCompany(company._id)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
     );
 };
 
