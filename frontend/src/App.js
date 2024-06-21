@@ -6,11 +6,8 @@ import './App.css';
 import { CompanyProvider } from './contexts/CompanyContext';
 import { ContactProvider } from './contexts/ContactContext';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AddCompany from './components/AddCompany';
 import ContactTable from './components/ContactTable';
-import AddContact from './components/AddContact';
 import CompanyTable from './components/CompanyTable';
-import ContactList from './components/ContactList';
 
 function App() {
   // const { isAuthenticated } = useAuth0();
@@ -24,8 +21,6 @@ function App() {
               {/* {isAuthenticated ? <LogoutButton /> : <LoginButton />} */}
             </header>
             <main>
-              <AddCompany />
-              <AddContact />
               <Routes>
                 <Route exact path="/" element={<CompanyTable />} />
                 <Route path="/company/:companyId/contacts" element={ <ContactTable />} />

@@ -2,15 +2,22 @@ import React, { useState, useContext, useEffect } from 'react';
 import {
     Table, TableBody,TableCell, TableContainer,TableHead,TableRow,Paper,TextField, Button
     } from '@mui/material';
-import { Edit as EditIcon, Save as SaveIcon, Delete as DeleteIcon, ArrowBack as ArrowBackIcon, AlignHorizontalLeft } from '@mui/icons-material';
+import { Edit as EditIcon, Save as SaveIcon, Delete as DeleteIcon, ArrowBack as ArrowBackIcon, Add as AddIcon } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ContactContext } from '../contexts/ContactContext';
 
 const ContactTable = () => {
     const { companyId } = useParams();
-    const { contacts, fetchContactsByCompany, editContact, deleteContact } = useContext(ContactContext);
+    const { contacts, fetchContactsByCompany, addContact, editContact, deleteContact } = useContext(ContactContext);
     const [editIdx, setEditIdx] = useState(-1);
     const [currentContact, setCurrentContact] = useState({});
+    const [newContact, setNewContact] = useState({
+        name: '',
+        email: '',
+        linkedIn: '',
+        position: '',
+        company: companyId
+    });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,6 +40,20 @@ const ContactTable = () => {
 
     const handleBackClick = () => {
         navigate('/');
+    };
+
+    const handleAdd = async () => {
+        await addContact(newContact);
+        setNewContact({
+            name: '',
+            email: '',
+            linkedIn: '',
+            position: ''
+        });
+    };
+
+    const handleNewChange = (event) => {
+        setNewContact({ ...newContact, [event.target.name]: event.target.value });
     };
 
     return (
@@ -107,6 +128,43 @@ const ContactTable = () => {
                                 </TableCell>
                             </TableRow>
                         ))}
+                        <TableRow>
+                            <TableCell>
+                                <TextField
+                                    name="name"
+                                    value={newContact.name}
+                                    onChange={handleNewChange}
+                                    placeholder='Name'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <TextField
+                                    name="email"
+                                    value={newContact.email}
+                                    onChange={handleNewChange}
+                                    placeholder='Email'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <TextField
+                                    name="linkedIn"
+                                    value={newContact.linkedIn}
+                                    onChange={handleNewChange}
+                                    placeholder='LinkedIn'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <TextField
+                                    name="position"
+                                    value={newContact.position}
+                                    onChange={handleNewChange}
+                                    placeholder='Position'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <AddIcon onClick={handleAdd}><AddIcon /></AddIcon>
+                            </TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>

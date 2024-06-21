@@ -3,13 +3,19 @@ import { CompanyContext } from '../contexts/CompanyContext';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField
 } from '@mui/material';
-import { Edit as EditIcon, Delete as DeleteIcon, Save as SaveIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon, Save as SaveIcon, Add as AddIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 const CompanyTable = ({ data, columns, updateData, deleteData }) => {
-    const { companies, editCompany, deleteCompany } = useContext(CompanyContext);
+    const { companies, addCompany, editCompany, deleteCompany } = useContext(CompanyContext);
     const [editIdx, setEditIdx] = useState(-1);
     const [currentCompany, setCurrentCompany] = useState({});
+    const [ newCompany, setNewCompany ] = useState({
+        name: '',
+        website: '',
+        industry: '',
+        companyLinkedin: ''
+    });
 
     const handleEdit = (index, company) => {
         setEditIdx(index);
@@ -23,6 +29,20 @@ const CompanyTable = ({ data, columns, updateData, deleteData }) => {
 
     const handleChange = (event) => {
         setCurrentCompany({ ...currentCompany, [event.target.name]: event.target.value });
+    };
+
+    const handleAdd = async () => {
+        await addCompany(newCompany);
+        setNewCompany({
+            name: '',
+            website: '',
+            industry: '',
+            companyLinkedin: ''
+        });
+    };
+
+    const handleNewChange = (event) => {
+        setNewCompany({ ...newCompany, [event.target.name]: event.target.value });
     };
 
     return (
@@ -102,6 +122,45 @@ const CompanyTable = ({ data, columns, updateData, deleteData }) => {
                                 </TableCell>
                             </TableRow>
                         ))}
+                        <TableRow>
+                            <TableCell>
+                                <TextField
+                                    name="name"
+                                    value={newCompany.name}
+                                    onChange={handleNewChange}
+                                    placeholder='Name'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <TextField
+                                    name="website"
+                                    value={newCompany.website}
+                                    onChange={handleNewChange}
+                                    placeholder='Website'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <TextField
+                                    name="industry"
+                                    value={newCompany.industry}
+                                    onChange={handleNewChange}
+                                    placeholder='Industry'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <TextField
+                                    name="companyLinkedin"
+                                    value={newCompany.companyLinkedin}
+                                    onChange={handleNewChange}
+                                    placeholder='Company LinkedIn'
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <IconButton onClick={handleAdd}>
+                                    <AddIcon />
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
