@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { CompanyContext } from '../contexts/CompanyContext';
+import { CompanyContext } from '../../contexts/CompanyContext';
 
 const CompanyList = () => {
   const { companies } = useContext(CompanyContext);

@@ -5,6 +5,7 @@ const connectDB = require('./db'); // Import the connectDB function
 
 const companyRoutes = require('./routes/company');
 const contactRoutes = require('./routes/contact');
+const emailTemplateRoutes = require('./routes/emailTemplate');
 
 const app = express(); // Create an instance of an Express application
 const port = 3000; // Define the port number on which the server will listen
@@ -23,6 +24,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/companies', companyRoutes);
 app.use('/api/contacts', contactRoutes);
+app.use('/api/email-templates', emailTemplateRoutes);
+
 
 // Protected route
 /* app.get('/protected', checkJwt, (req, res) => {
